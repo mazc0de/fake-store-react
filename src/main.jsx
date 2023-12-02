@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-tailwind/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './index.css';
-import { Home } from './pages';
+import { Home, Login } from './pages';
 import { Layout } from './components';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
           </Route>
         </Routes>
