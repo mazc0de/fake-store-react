@@ -7,7 +7,7 @@ import { Carousel, Card, CardHeader, CardBody, Typography, CardFooter, Button, R
 
 import ProductContext from '../../context/ProductContext';
 
-import { LoadingSpinner, SectionTitle } from '../../components';
+import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
 
 import Banner1 from '../../assets/images/banner/banner-1.webp';
 import Banner2 from '../../assets/images/banner/banner-2.webp';
@@ -145,43 +145,14 @@ const Home = () => {
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
               {newArrivalProducts?.map((product) => {
                 return (
-                  <Card
-                    className="group w-full cursor-pointer border transition-all duration-200 hover:shadow-lg"
+                  <CardProduct
                     key={product.id}
-                  >
-                    <CardHeader shadow={false} floated={false} className="h-56">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="h-full w-full object-cover transition-all duration-200 group-hover:scale-110"
-                      />
-                    </CardHeader>
-                    <CardBody className="h-20 lg:h-40">
-                      <div className="mb-2 flex flex-row items-start justify-between ">
-                        <Typography color="blue-gray" className="font-poppins font-medium">
-                          {product.title}
-                        </Typography>
-                        <Typography color="blue-gray" className="font-poppins font-bold">
-                          ${product.price}
-                        </Typography>
-                      </div>
-                    </CardBody>
-                    <CardFooter className="pt-0">
-                      <div className="flex items-center justify-between gap-2 py-3 font-bold text-blue-gray-500">
-                        <Rating value={Math.floor(product.rating.rate)} readonly />
-                        <Typography color="blue-gray" className="font-poppins font-medium text-blue-gray-500">
-                          ({product.rating.count})
-                        </Typography>
-                      </div>
-                      <Button
-                        ripple={false}
-                        fullWidth={true}
-                        className="bg-blue-gray-900/10 font-poppins text-blue-gray-900 shadow-none hover:scale-105 hover:bg-red-200 hover:text-red-800 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                      >
-                        Add to Cart
-                      </Button>
-                    </CardFooter>
-                  </Card>
+                    image={product.image}
+                    title={product.title}
+                    price={product.price}
+                    rate={product.rating.rate}
+                    count={product.rating.count}
+                  />
                 );
               })}
             </div>
