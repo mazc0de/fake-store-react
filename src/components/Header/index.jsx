@@ -14,6 +14,7 @@ import {
   IconButton,
   List,
 } from '@material-tailwind/react';
+import Footer from '../Footer';
 
 const Header = () => {
   const [openPopover, setOpenPopover] = useState(false);
@@ -116,6 +117,7 @@ const Header = () => {
       </Drawer>
       <div className="mx-auto my-5 max-w-screen-xl">
         <Outlet />
+        <Footer menu={navList} />
       </div>
     </div>
   );
