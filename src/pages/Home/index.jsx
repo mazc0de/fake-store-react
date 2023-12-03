@@ -122,7 +122,7 @@ const Home = () => {
             {categories?.map((category) => {
               return (
                 <Card
-                  className="group flex h-28 w-28 cursor-pointer select-none flex-col items-center justify-center border p-10 text-center font-poppins transition-all duration-200 hover:shadow-lg lg:h-40 lg:w-40 lg:p-5"
+                  className="group flex h-28 w-28 cursor-pointer select-none flex-col items-center justify-center border  p-10 text-center font-poppins transition-all duration-200 hover:scale-105 hover:shadow-lg lg:h-40 lg:w-40 lg:p-5"
                   key={category.id}
                 >
                   <div>{category.icon}</div>
