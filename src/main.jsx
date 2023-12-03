@@ -8,20 +8,23 @@ import { Home, Login } from './pages';
 import { Layout } from './components';
 import ProtectedRoute from './hoc/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
+import { ProductProvider } from './context/ProductContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/login" element={<Login />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/" element={<Home />} />
+          <ProductProvider>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/login" element={<Login />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/" element={<Home />} />
+                </Route>
               </Route>
-            </Route>
-          </Routes>
+            </Routes>
+          </ProductProvider>
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
