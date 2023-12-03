@@ -6,8 +6,8 @@ export const navMenu = [
   },
   {
     id: 2,
-    title: 'Shop',
-    slug: '/shop',
+    title: 'Products',
+    slug: '/products',
   },
   {
     id: 3,

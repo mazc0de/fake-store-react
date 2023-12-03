@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router';
 import { navMenu } from '../../utils/navMenu';
 import { Bars3Icon, ShoppingCartIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -13,7 +13,10 @@ import {
   Drawer,
   IconButton,
   List,
+  ListItem,
+  ListItemPrefix,
 } from '@material-tailwind/react';
+import Footer from '../Footer';
 
 const Header = () => {
   const [openPopover, setOpenPopover] = useState(false);
@@ -37,16 +40,22 @@ const Header = () => {
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {navMenu?.map((item) => {
         return (
-          <Link to={item.slug} key={item.id}>
-            <Typography
-              as="li"
-              variant="small"
-              color="blue-gray"
-              className="p-1 font-normal transition-all duration-200 hover:text-primary "
-            >
-              {item.title}
-            </Typography>
-          </Link>
+          <NavLink to={item.slug} key={item.id}>
+            {({ isActive }) => (
+              <Typography
+                as="li"
+                variant="small"
+                color="blue-gray"
+                className={`${
+                  isActive
+                    ? 'font-poppins font-semibold text-primary'
+                    : 'p-1 font-poppins font-normal transition-all duration-200 hover:text-primary'
+                }`}
+              >
+                {item.title}
+              </Typography>
+            )}
+          </NavLink>
         );
       })}
     </ul>
@@ -116,6 +125,7 @@ const Header = () => {
       </Drawer>
       <div className="mx-auto my-5 max-w-screen-xl">
         <Outlet />
+        <Footer menu={navList} />
       </div>
     </div>
   );
