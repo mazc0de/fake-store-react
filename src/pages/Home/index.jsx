@@ -141,60 +141,62 @@ const Home = () => {
         {loading?.newArrival ? (
           <LoadingSpinner />
         ) : (
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
-            {newArrivalProducts?.map((product) => {
-              return (
-                <Card
-                  className="group w-full cursor-pointer border transition-all duration-200 hover:shadow-lg"
-                  key={product.id}
-                >
-                  <CardHeader shadow={false} floated={false} className="h-56">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="h-full w-full object-cover transition-all duration-200 group-hover:scale-110"
-                    />
-                  </CardHeader>
-                  <CardBody className="h-20 lg:h-40">
-                    <div className="mb-2 flex flex-row items-start justify-between ">
-                      <Typography color="blue-gray" className="font-poppins font-medium">
-                        {product.title}
-                      </Typography>
-                      <Typography color="blue-gray" className="font-poppins font-bold">
-                        ${product.price}
-                      </Typography>
-                    </div>
-                  </CardBody>
-                  <CardFooter className="pt-0">
-                    <div className="flex items-center justify-between gap-2 py-3 font-bold text-blue-gray-500">
-                      <Rating value={Math.floor(product.rating.rate)} readonly />
-                      <Typography color="blue-gray" className="font-poppins font-medium text-blue-gray-500">
-                        ({product.rating.count})
-                      </Typography>
-                    </div>
-                    <Button
-                      ripple={false}
-                      fullWidth={true}
-                      className="bg-blue-gray-900/10 font-poppins text-blue-gray-900 shadow-none hover:scale-105 hover:bg-red-200 hover:text-red-800 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                      Add to Cart
-                    </Button>
-                  </CardFooter>
-                </Card>
-              );
-            })}
-          </div>
+          <>
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
+              {newArrivalProducts?.map((product) => {
+                return (
+                  <Card
+                    className="group w-full cursor-pointer border transition-all duration-200 hover:shadow-lg"
+                    key={product.id}
+                  >
+                    <CardHeader shadow={false} floated={false} className="h-56">
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="h-full w-full object-cover transition-all duration-200 group-hover:scale-110"
+                      />
+                    </CardHeader>
+                    <CardBody className="h-20 lg:h-40">
+                      <div className="mb-2 flex flex-row items-start justify-between ">
+                        <Typography color="blue-gray" className="font-poppins font-medium">
+                          {product.title}
+                        </Typography>
+                        <Typography color="blue-gray" className="font-poppins font-bold">
+                          ${product.price}
+                        </Typography>
+                      </div>
+                    </CardBody>
+                    <CardFooter className="pt-0">
+                      <div className="flex items-center justify-between gap-2 py-3 font-bold text-blue-gray-500">
+                        <Rating value={Math.floor(product.rating.rate)} readonly />
+                        <Typography color="blue-gray" className="font-poppins font-medium text-blue-gray-500">
+                          ({product.rating.count})
+                        </Typography>
+                      </div>
+                      <Button
+                        ripple={false}
+                        fullWidth={true}
+                        className="bg-blue-gray-900/10 font-poppins text-blue-gray-900 shadow-none hover:scale-105 hover:bg-red-200 hover:text-red-800 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      >
+                        Add to Cart
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                );
+              })}
+            </div>
+            <div className="my-5 flex w-full justify-center">
+              <button
+                className={`group relative mt-3 flex w-auto justify-center overflow-hidden rounded-md border bg-blue-gray-900/10 px-5 py-2.5 text-black transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-red-800 hover:to-primary hover:ring-2 hover:ring-primary hover:ring-offset-2`}
+              >
+                <span
+                  className={`ease absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-20 transition-all duration-1000 group-hover:-translate-x-64`}
+                ></span>
+                <span className="relative font-poppins">View All Products</span>
+              </button>
+            </div>
+          </>
         )}
-        <div className="my-5 flex w-full justify-center">
-          <button
-            className={`bg-third group relative mt-3 flex w-auto justify-center overflow-hidden rounded-md border bg-blue-gray-900/10 px-5 py-2.5 text-black transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-red-800 hover:to-primary hover:ring-2 hover:ring-primary hover:ring-offset-2`}
-          >
-            <span
-              className={`ease absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-20 transition-all duration-1000 group-hover:-translate-x-64`}
-            ></span>
-            <span className="relative font-poppins">View All Products</span>
-          </button>
-        </div>
       </div>
     </div>
   );
