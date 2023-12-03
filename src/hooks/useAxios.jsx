@@ -1,12 +1,13 @@
+import axios from 'axios';
+
 const useAxios = () => {
   const auth = JSON.parse(localStorage.getItem('auth'));
+
   const axiosInstance = axios.create({
-    baseUrl: import.meta.env.VITE_REACT_APP_API_KEY,
+    baseURL: `${import.meta.env.VITE_REACT_APP_API_KEY}`,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${auth}`,
     },
-    withCredentials: false,
   });
 
   axiosInstance.interceptors.request.use(async (req) => {
@@ -15,6 +16,7 @@ const useAxios = () => {
     }
     return req;
   });
+  return axiosInstance;
 };
 
 export default useAxios;
