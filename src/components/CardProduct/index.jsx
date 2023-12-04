@@ -10,7 +10,7 @@ const CardProduct = ({ image, title, price, rate, count }) => {
           className="h-full w-full object-cover transition-all duration-200 group-hover:scale-110"
         />
       </CardHeader>
-      <CardBody className="h-20 lg:h-40">
+      <CardBody className="h-36 lg:h-52">
         <div className="mb-2 flex flex-row items-start justify-between ">
           <Typography color="blue-gray" className="font-poppins font-medium">
             {title}
