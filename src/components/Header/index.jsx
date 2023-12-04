@@ -123,7 +123,7 @@ const Header = () => {
           </Button>
         </div>
       </Drawer>
-      <div className="mx-auto my-5 max-w-screen-xl">
+      <div className="mx-5 my-5 max-w-screen-xl  lg:mx-auto">
         <Outlet />
         <Footer menu={navList} />
       </div>

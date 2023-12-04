@@ -4,11 +4,11 @@ import { ThemeProvider } from '@material-tailwind/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './index.css';
-import { Home, Login, Products } from './pages';
 import { Layout } from './components';
 import ProtectedRoute from './hoc/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { ProductProvider } from './context/ProductContext';
+import { Home, Login, Products, ProductCategories, ProductsCategory } from './pages';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -22,6 +22,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route element={<ProtectedRoute />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/products" element={<Products />} />
+                  <Route path="/products/categories" element={<ProductCategories />} />
+                  <Route path="/products/categories/:category" element={<ProductsCategory />} />
                 </Route>
               </Route>
             </Routes>

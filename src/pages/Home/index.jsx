@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import { IoDiamond } from 'react-icons/io5';
 import { FaComputer } from 'react-icons/fa6';
 import { GiAmpleDress } from 'react-icons/gi';
 import { BiSolidTShirt } from 'react-icons/bi';
+import { Carousel, Card } from '@material-tailwind/react';
 import { useContext, useEffect, useState } from 'react';
-import { Carousel, Card, CardHeader, CardBody, Typography, CardFooter, Button, Rating } from '@material-tailwind/react';
 
 import ProductContext from '../../context/ProductContext';
 
@@ -121,15 +122,17 @@ const Home = () => {
           <div className="grid grid-cols-2 gap-3 lg:flex lg:justify-between">
             {categories?.map((category) => {
               return (
-                <Card
-                  className="group flex h-28 w-28 cursor-pointer select-none flex-col items-center justify-center border  p-10 text-center font-poppins transition-all duration-200 hover:scale-105 hover:shadow-lg lg:h-40 lg:w-40 lg:p-5"
-                  key={category.id}
-                >
-                  <div>{category.icon}</div>
-                  <p className="text-sm transition-all duration-200 group-hover:text-primary lg:text-lg">
-                    {category.title}
-                  </p>
-                </Card>
+                <Link to={`/products/categories/${category.slug}`}>
+                  <Card
+                    className="group flex h-28 w-28 cursor-pointer select-none flex-col items-center justify-center border  p-10 text-center font-poppins transition-all duration-200 hover:scale-105 hover:shadow-lg lg:h-40 lg:w-40 lg:p-5"
+                    key={category.id}
+                  >
+                    <div>{category.icon}</div>
+                    <p className="text-sm transition-all duration-200 group-hover:text-primary lg:text-lg">
+                      {category.title}
+                    </p>
+                  </Card>
+                </Link>
               );
             })}
           </div>
@@ -156,16 +159,18 @@ const Home = () => {
                 );
               })}
             </div>
-            <div className="my-5 flex w-full justify-center">
-              <button
-                className={`group relative mt-3 flex w-auto justify-center overflow-hidden rounded-md border bg-blue-gray-900/10 px-5 py-2.5 text-black transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-red-800 hover:to-primary hover:ring-2 hover:ring-primary hover:ring-offset-2`}
-              >
-                <span
-                  className={`ease absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-20 transition-all duration-1000 group-hover:-translate-x-64`}
-                ></span>
-                <span className="relative font-poppins">View All Products</span>
-              </button>
-            </div>
+            <Link to="/products">
+              <div className="my-5 flex w-full justify-center">
+                <button
+                  className={`group relative mt-3 flex w-auto justify-center overflow-hidden rounded-md border bg-blue-gray-900/10 px-5 py-2.5 text-black transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-red-800 hover:to-primary hover:ring-2 hover:ring-primary hover:ring-offset-2`}
+                >
+                  <span
+                    className={`ease absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-20 transition-all duration-1000 group-hover:-translate-x-64`}
+                  ></span>
+                  <span className="relative font-poppins">View All Products</span>
+                </button>
+              </div>
+            </Link>
           </>
         )}
       </div>
