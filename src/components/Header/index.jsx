@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router';
 import { navMenu } from '../../utils/navMenu';
-import { Bars3Icon, ShoppingCartIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, ShoppingCartIcon, TrashIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
   Navbar,
   Typography,
@@ -13,13 +13,15 @@ import {
   Drawer,
   IconButton,
   List,
-  ListItem,
-  ListItemPrefix,
 } from '@material-tailwind/react';
+
 import Footer from '../Footer';
+import { useCart } from '../../context/CartContext';
 
 const Header = () => {
   const [openPopover, setOpenPopover] = useState(false);
+
+  const { state } = useCart();
 
   const [open, setOpen] = useState(false);
 
@@ -74,10 +76,35 @@ const Header = () => {
                 <PopoverHandler {...triggers}>
                   <ShoppingCartIcon className="h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary" />
                 </PopoverHandler>
-                <PopoverContent {...triggers} className="z-50 max-w-[24rem]">
-                  <div className="flex h-14 w-72 items-center justify-center">
-                    <p>Your cart is empty</p>
-                  </div>
+                <PopoverContent {...triggers} className="z-50 flex w-96 flex-col gap-2">
+                  {state.cartItems.length === 0 ? (
+                    <div className="flex items-center justify-center p-5">
+                      <p>Your cart is empty</p>
+                    </div>
+                  ) : (
+                    <>
+                      {state.cartItems?.map(({ id, title, price, quantity, image }) => {
+                        return (
+                          <div
+                            key={id}
+                            className="flex flex-row items-center justify-between gap-5 border-b-2 py-2 font-poppins last:border-b-0"
+                          >
+                            <div className="flex flex-row gap-5">
+                              <img src={image} alt="" className="h-auto w-10" />
+                              <div className="flex flex-col justify-between">
+                                <p>{title}</p>
+                                <p>({quantity}) pcs</p>
+                              </div>
+                            </div>
+                            <div className="flex flex-row gap-3">
+                              <p className="font-semibold">${price}</p>
+                              <TrashIcon className="w-5 text-primary" />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
                 </PopoverContent>
               </Popover>
 

@@ -4,7 +4,7 @@ import { FaComputer } from 'react-icons/fa6';
 import { GiAmpleDress } from 'react-icons/gi';
 import { BiSolidTShirt } from 'react-icons/bi';
 import { Carousel, Card } from '@material-tailwind/react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
 
@@ -13,11 +13,18 @@ import Banner2 from '../../assets/images/banner/banner-2.webp';
 
 import useAxios from '../../hooks/useAxios';
 import useToast from '../../hooks/useToast';
+import { useCart } from '../../context/CartContext';
 
 const Home = () => {
   const api = useAxios();
   const { toastError } = useToast();
   const [categories, setCategories] = useState();
+
+  const { dispatch } = useCart();
+
+  const addToCart = (item) => {
+    dispatch({ type: 'ADD_TO_CART', payload: item });
+  };
 
   const [loading, setLoading] = useState({
     categories: true,
@@ -120,7 +127,7 @@ const Home = () => {
           <div className="grid grid-cols-2 gap-3 lg:flex lg:justify-between">
             {categories?.map((category) => {
               return (
-                <Link to={`/products/categories/${category.slug}`}>
+                <Link to={`/products/categories/${category.slug}`} key={category.id}>
                   <Card
                     className="group flex h-28 w-28 cursor-pointer select-none flex-col items-center justify-center border  p-10 text-center font-poppins transition-all duration-200 hover:scale-105 hover:shadow-lg lg:h-40 lg:w-40 lg:p-5"
                     key={category.id}
@@ -147,6 +154,7 @@ const Home = () => {
               {newArrivalProducts?.map((product) => {
                 return (
                   <CardProduct
+                    handleAddToCart={() => addToCart(product)}
                     key={product.id}
                     image={product.image}
                     title={product.title}

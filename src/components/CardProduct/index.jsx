@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Rating, Typography } from '@material-tailwind/react';
 
-const CardProduct = ({ image, title, price, rate, count }) => {
+const CardProduct = ({ image, title, price, rate, count, handleAddToCart }) => {
   return (
     <Card className="group w-full cursor-pointer border transition-all duration-200 hover:shadow-lg">
       <CardHeader shadow={false} floated={false} className="h-56">
@@ -28,6 +28,7 @@ const CardProduct = ({ image, title, price, rate, count }) => {
           </Typography>
         </div>
         <Button
+          onClick={handleAddToCart}
           ripple={false}
           fullWidth={true}
           className="bg-blue-gray-900/10 font-poppins text-blue-gray-900 shadow-none hover:scale-105 hover:bg-red-200 hover:text-red-800 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"

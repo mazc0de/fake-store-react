@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import { Layout } from './components';
 import ProtectedRoute from './hoc/ProtectedRoute';
+import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import { Home, Login, Products, ProductCategories, ProductsCategory } from './pages';
 
@@ -14,17 +15,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider>
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/login" element={<Login />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/products/categories" element={<ProductCategories />} />
-                <Route path="/products/categories/:category" element={<ProductsCategory />} />
+          <CartProvider>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/login" element={<Login />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/products/categories" element={<ProductCategories />} />
+                  <Route path="/products/categories/:category" element={<ProductsCategory />} />
+                </Route>
               </Route>
-            </Route>
-          </Routes>
+            </Routes>
+          </CartProvider>
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
