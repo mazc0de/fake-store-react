@@ -7,7 +7,6 @@ import './index.css';
 import { Layout } from './components';
 import ProtectedRoute from './hoc/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
-import { ProductProvider } from './context/ProductContext';
 import { Home, Login, Products, ProductCategories, ProductsCategory } from './pages';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -15,19 +14,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider>
       <BrowserRouter>
         <AuthProvider>
-          <ProductProvider>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/login" element={<Login />} />
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/products/categories" element={<ProductCategories />} />
-                  <Route path="/products/categories/:category" element={<ProductsCategory />} />
-                </Route>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/login" element={<Login />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/products/categories" element={<ProductCategories />} />
+                <Route path="/products/categories/:category" element={<ProductsCategory />} />
               </Route>
-            </Routes>
-          </ProductProvider>
+            </Route>
+          </Routes>
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>

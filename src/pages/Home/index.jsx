@@ -6,8 +6,6 @@ import { BiSolidTShirt } from 'react-icons/bi';
 import { Carousel, Card } from '@material-tailwind/react';
 import { useContext, useEffect, useState } from 'react';
 
-import ProductContext from '../../context/ProductContext';
-
 import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
 
 import Banner1 from '../../assets/images/banner/banner-1.webp';
@@ -19,7 +17,7 @@ import useToast from '../../hooks/useToast';
 const Home = () => {
   const api = useAxios();
   const { toastError } = useToast();
-  const { categories, setCategories } = useContext(ProductContext);
+  const [categories, setCategories] = useState();
 
   const [loading, setLoading] = useState({
     categories: true,
