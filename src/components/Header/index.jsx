@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Bars3Icon, ShoppingCartIcon, TrashIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
@@ -46,7 +46,7 @@ const Header = () => {
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {navMenu?.map((item) => {
         return (
-          <NavLink to={item.slug} key={item.id} onClick={handleDrawer}>
+          <NavLink to={item.slug} key={item.id} onClick={() => setOpen(false)}>
             {({ isActive }) => (
               <Typography
                 as="li"
@@ -129,9 +129,11 @@ const Header = () => {
                         <p>Total Items: {getTotalCartItems()}</p>
                       </div>
                       <div>
-                        <Button size="sm" className="bg-primary">
-                          Checkout
-                        </Button>
+                        <Link to="/cart">
+                          <Button size="sm" className="bg-primary">
+                            Checkout
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   )}
@@ -141,14 +143,16 @@ const Header = () => {
               <UserCircleIcon className="h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary" />
             </div>
             <div className="flex">
-              <div className="relative mr-3 lg:hidden">
-                <ShoppingCartIcon className={`h-8 w-8 text-gray-500 transition-all duration-200`} />
-                <div className="absolute -bottom-[5px] -right-[10px] ">
-                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-poppins text-sm text-white">
-                    {getTotalCartItems()}
+              <Link to="/cart">
+                <div className="relative mr-3 lg:hidden">
+                  <ShoppingCartIcon className={`h-8 w-8 text-gray-500 transition-all duration-200`} />
+                  <div className="absolute -bottom-[5px] -right-[10px] ">
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-poppins text-sm text-white">
+                      {getTotalCartItems()}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
               <IconButton variant="text" color="blue-gray" className="lg:hidden" onClick={handleDrawer}>
                 {open ? (
                   <XMarkIcon className="h-6 w-6" strokeWidth={2} />
@@ -180,17 +184,19 @@ const Header = () => {
         </div>
         <List>{navList}</List>
         <div className="flex">
-          <div className="relative">
-            <Button className="ml-5 mt-3 flex gap-x-2 bg-primary" size="sm">
-              <ShoppingCartIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
-              Cart
-            </Button>
-            <div className="absolute -right-[10px] top-0 ">
-              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-black font-poppins text-sm text-white">
-                {getTotalCartItems()}
+          <Link to="/cart" onClick={() => setOpen(false)}>
+            <div className="relative">
+              <Button className="ml-5 mt-3 flex gap-x-2 bg-primary" size="sm">
+                <ShoppingCartIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
+                Cart
+              </Button>
+              <div className="absolute -right-[10px] top-0 ">
+                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-black font-poppins text-sm text-white">
+                  {getTotalCartItems()}
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
           <Button className="ml-5 mt-3 flex gap-x-2 bg-primary" size="sm">
             <UserCircleIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
             Profile
