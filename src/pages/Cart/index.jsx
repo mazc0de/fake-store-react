@@ -41,8 +41,12 @@ const Cart = () => {
     <>
       <BreadcrumbsComponent menus={breadcrumbsMenu} />
       <SectionTitle title="Your Cart" />
-      <div className="grid grid-cols-1 gap-2 font-poppins">
-        <div className="flex flex-col gap-3 rounded-lg border p-5">
+      <div className="grid grid-cols-1 gap-2 font-poppins lg:grid-cols-3">
+        <div
+          className={`flex flex-col gap-3 rounded-lg border p-5 lg:col-span-2 ${
+            state.cartItems?.length === 0 && 'lg:col-span-3'
+          }`}
+        >
           <div>
             {state.cartItems?.length === 0 ? (
               <div className="flex items-center justify-center p-5">
@@ -53,16 +57,16 @@ const Cart = () => {
                 {state.cartItems?.map((item) => {
                   return (
                     <div className="flex flex-col border-b-2 font-poppins last:border-none" key={item.id}>
-                      <div className="my-3 flex flex-row gap-2">
-                        <div className="w-1/5">
+                      <div className="my-3 flex flex-row gap-2 lg:gap-5">
+                        <div className="w-1/5 lg:w-20">
                           <img src={item.image} alt={item.title} />
                         </div>
                         <div className="flex w-3/5 flex-col justify-between gap-2">
-                          <p className="text-sm">{item.title}</p>
-                          <p className="text-sm font-semibold">${item.price}</p>
+                          <p className="text-sm font-bold lg:text-lg">{item.title}</p>
+                          <p className="text-sm font-semibold lg:text-2xl">${item.price}</p>
                         </div>
-                        <div className="flex w-1/5 flex-col items-end justify-between">
-                          <TrashIcon className="w-5 text-primary" onClick={() => removeFromCart(item)} />
+                        <div className="flex w-2/5 flex-col items-end justify-between">
+                          <TrashIcon className="w-5 cursor-pointer text-primary" onClick={() => removeFromCart(item)} />
                           <div className="flex items-center gap-3">
                             <IconButton
                               size="sm"
@@ -86,7 +90,7 @@ const Cart = () => {
           </div>
         </div>
         {state.cartItems?.length !== 0 && (
-          <div className="flex flex-col gap-3 rounded-lg border p-5">
+          <div className="flex h-96 flex-col gap-3 rounded-lg border p-5">
             <h3 className="text-lg font-semibold">Order Summary</h3>
             <div className="flex justify-between">
               <p>Subtotal</p>
