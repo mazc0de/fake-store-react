@@ -122,7 +122,7 @@ const Header = () => {
                     <div className="py-5 font-poppins">
                       <p>Total Items: {getTotalCartItems()}</p>
                       <p>
-                        Total Price: <span className="font-semibold">${getTotalPriceCart()}</span>
+                        Total Price: <span className="font-semibold">${getTotalPriceCart().toFixed(2)}</span>
                       </p>
                     </div>
                   )}
