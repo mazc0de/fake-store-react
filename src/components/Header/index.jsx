@@ -21,7 +21,11 @@ import { useCart } from '../../context/CartContext';
 const Header = () => {
   const [openPopover, setOpenPopover] = useState(false);
 
-  const { state } = useCart();
+  const { state, dispatch } = useCart();
+
+  const removeFromCart = (item) => {
+    dispatch({ type: 'REMOVE_FROM_CART', payload: item });
+  };
 
   const [open, setOpen] = useState(false);
 
@@ -83,22 +87,22 @@ const Header = () => {
                     </div>
                   ) : (
                     <>
-                      {state.cartItems?.map(({ id, title, price, quantity, image }) => {
+                      {state.cartItems?.map((cartItem) => {
                         return (
                           <div
-                            key={id}
+                            key={cartItem.id}
                             className="flex flex-row items-center justify-between gap-5 border-b-2 py-2 font-poppins last:border-b-0"
                           >
                             <div className="flex flex-row gap-5">
-                              <img src={image} alt="" className="h-auto w-10" />
+                              <img src={cartItem.image} alt="" className="h-auto w-10" />
                               <div className="flex flex-col justify-between">
-                                <p>{title}</p>
-                                <p>({quantity}) pcs</p>
+                                <p>{cartItem.title}</p>
+                                <p>({cartItem.quantity}) pcs</p>
                               </div>
                             </div>
                             <div className="flex flex-row gap-3">
-                              <p className="font-semibold">${price}</p>
-                              <TrashIcon className="w-5 text-primary" />
+                              <p className="font-semibold">${cartItem.price}</p>
+                              <TrashIcon className="w-5 text-primary" onClick={() => removeFromCart(cartItem)} />
                             </div>
                           </div>
                         );
