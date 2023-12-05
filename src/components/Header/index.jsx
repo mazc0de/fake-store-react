@@ -68,8 +68,8 @@ const Header = () => {
   );
   return (
     <div className="max-h-screen w-full overflow-y-auto">
-      <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
-        <div className="mx-auto flex max-w-screen-xl items-center justify-between text-blue-gray-900">
+      <Navbar className="sticky top-0 z-10 flex h-max max-w-full rounded-none px-4 py-2 lg:block lg:h-20 lg:px-8 lg:py-4">
+        <div className="mx-auto flex w-full items-center justify-between text-blue-gray-900 lg:max-w-screen-xl">
           <Typography as="a" href="#" className="mr-4 cursor-pointer py-1.5 font-russoOne text-2xl font-medium">
             FAKE STORE
           </Typography>
@@ -171,8 +171,10 @@ const Header = () => {
           </Button>
         </div>
       </Drawer>
-      <div className="mx-5 my-5 max-w-screen-xl  lg:mx-auto">
-        <Outlet />
+      <div className="max-w-screen-xl lg:mx-auto">
+        <div className="min-h-[calc(100vh-160px)] p-5">
+          <Outlet />
+        </div>
         <Footer menu={navList} />
       </div>
     </div>
