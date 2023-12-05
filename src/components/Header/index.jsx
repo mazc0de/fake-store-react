@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router';
-import { navMenu } from '../../utils/navMenu';
+import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Bars3Icon, ShoppingCartIcon, TrashIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
   Navbar,
@@ -16,6 +15,7 @@ import {
 } from '@material-tailwind/react';
 
 import Footer from '../Footer';
+import { navMenu } from '../../utils/navMenu';
 import { useCart } from '../../context/CartContext';
 
 const Header = () => {
@@ -100,10 +100,10 @@ const Header = () => {
                         return (
                           <div
                             key={cartItem.id}
-                            className="flex flex-row items-center justify-between gap-5 border-b-2 py-2 font-poppins last:border-b-0"
+                            className="mr-1 flex flex-row items-center justify-between gap-5 border-b-2 py-2 font-poppins last:border-b-0"
                           >
                             <div className="flex flex-row gap-5">
-                              <img src={cartItem.image} alt="" className="h-auto w-16 object-cover" />
+                              <img src={cartItem.image} alt={cartItem.title} className="h-auto w-16 object-cover" />
                               <div className="flex flex-col justify-between">
                                 <p>{cartItem.title}</p>
                                 <p>({cartItem.quantity}) pcs</p>
@@ -119,11 +119,18 @@ const Header = () => {
                     </div>
                   )}
                   {state.cartItems.length !== 0 && (
-                    <div className="py-5 font-poppins">
-                      <p>Total Items: {getTotalCartItems()}</p>
-                      <p>
-                        Total Price: <span className="font-semibold">${getTotalPriceCart().toFixed(2)}</span>
-                      </p>
+                    <div className="flex items-center justify-between py-5 font-poppins">
+                      <div className="flex flex-col gap-2">
+                        <p>
+                          Total Price: <span className="font-semibold">${getTotalPriceCart().toFixed(2)}</span>
+                        </p>
+                        <p>Total Items: {getTotalCartItems()}</p>
+                      </div>
+                      <div>
+                        <Button size="sm" className="bg-primary">
+                          Checkout
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </PopoverContent>
