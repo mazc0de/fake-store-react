@@ -5,8 +5,8 @@ import { Button, Chip, Rating } from '@material-tailwind/react';
 import useAxios from '../../hooks/useAxios';
 import useToast from '../../hooks/useToast';
 
-import { LoadingSpinner } from '../../components';
 import { useCart } from '../../context/CartContext';
+import { BreadcrumbsComponent, LoadingSpinner } from '../../components';
 
 const ProductDetail = () => {
   const api = useAxios();
@@ -35,18 +35,39 @@ const ProductDetail = () => {
   useEffect(() => {
     fetchProductDetail();
   }, []);
+
+  const breadcrumbsMenu = [
+    {
+      title: 'Home',
+      link: '/',
+      active: false,
+    },
+    {
+      title: 'Products',
+      link: '/products',
+      active: false,
+    },
+    {
+      title: `${productDetail?.title ? productDetail?.title : ''}`,
+      link: '/#',
+      active: true,
+    },
+  ];
+
   return (
     <>
+      <BreadcrumbsComponent menus={breadcrumbsMenu} />
+
       {loading ? (
         <>
           <LoadingSpinner />
         </>
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-2 font-poppins lg:grid-cols-2">
+          <div className=" mt-3 grid grid-cols-1 gap-2 font-poppins lg:grid-cols-2">
             <div className="flex justify-center">
               <div className="w-80 rounded-lg border p-5">
-                <img src={productDetail?.image} alt={productDetail?.name} />
+                <img src={productDetail?.image} alt={productDetail?.title} />
               </div>
             </div>
             <div className="flex flex-col justify-center gap-5">

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import useAxios from '../../hooks/useAxios';
 import useToast from '../../hooks/useToast';
 import { useCart } from '../../context/CartContext';
-import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
+import { BreadcrumbsComponent, CardProduct, LoadingSpinner } from '../../components';
 
 const ProductsCategory = () => {
   const api = useAxios();
@@ -33,13 +33,31 @@ const ProductsCategory = () => {
   useEffect(() => {
     fetchProductByCategory();
   }, []);
+
+  const breadcrumbsMenu = [
+    {
+      title: 'Home',
+      link: '/',
+      active: false,
+    },
+    {
+      title: 'Categories',
+      link: '/products/categories',
+      active: false,
+    },
+    {
+      title: `${category.charAt(0).toUpperCase() + category.slice(1)}`,
+      link: '/products/categories',
+      active: true,
+    },
+  ];
   return (
     <>
-      <SectionTitle title={category.charAt(0).toUpperCase() + category.slice(1)} />
+      <BreadcrumbsComponent menus={breadcrumbsMenu} />
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
+        <div className="mt-3 grid grid-cols-1 gap-5 lg:grid-cols-4">
           {products?.map((product) => {
             return (
               <Link to={`/products/${product.id}`} key={product.id}>

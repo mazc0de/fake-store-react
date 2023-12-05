@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
+import { BreadcrumbsComponent, CardProduct, LoadingSpinner } from '../../components';
 
 import useAxios from '../../hooks/useAxios';
 import useToast from '../../hooks/useToast';
@@ -33,13 +33,26 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  const breadcrumbsMenu = [
+    {
+      title: 'Home',
+      link: '/',
+      active: false,
+    },
+    {
+      title: 'Products',
+      link: '/products',
+      active: true,
+    },
+  ];
+
   return (
     <>
-      <SectionTitle title="All Products" />
+      <BreadcrumbsComponent menus={breadcrumbsMenu} />
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
+        <div className="mt-3 grid grid-cols-1 gap-5 lg:grid-cols-4">
           {products?.map((product) => {
             return (
               <Link to={`/products/${product.id}`} key={product.id}>
