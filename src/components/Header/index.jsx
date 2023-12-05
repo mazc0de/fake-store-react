@@ -78,11 +78,16 @@ const Header = () => {
             <div className="hidden items-center gap-x-3 lg:flex">
               <Popover open={openPopover} handler={setOpenPopover}>
                 <PopoverHandler {...triggers}>
-                  <ShoppingCartIcon
-                    className={`h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary ${
-                      openPopover && 'text-primary'
-                    }`}
-                  />
+                  <div className="relative">
+                    <ShoppingCartIcon
+                      className={`h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary ${
+                        openPopover && 'text-primary'
+                      }`}
+                    />
+                    <div className="absolute bottom-0 right-0 h-4 w-fit rounded-full bg-primary px-1 text-center text-xs text-white">
+                      {getTotalCartItems()}
+                    </div>
+                  </div>
                 </PopoverHandler>
                 <PopoverContent {...triggers} className="z-50 flex h-auto max-h-[450px] w-96 flex-col gap-2">
                   {state.cartItems.length === 0 ? (
