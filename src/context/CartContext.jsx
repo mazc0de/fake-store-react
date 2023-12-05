@@ -43,7 +43,19 @@ export const CartProvider = ({ children }) => {
   const initialState = { cartItems: [] };
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  return <CartContext.Provider value={{ state, dispatch }}>{children}</CartContext.Provider>;
+  const getTotalCartItems = () => {
+    return state.cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const getTotalPriceCart = () => {
+    return state.cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+  };
+
+  return (
+    <CartContext.Provider value={{ state, dispatch, getTotalCartItems, getTotalPriceCart }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 const useCart = () => {

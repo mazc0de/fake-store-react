@@ -21,7 +21,7 @@ import { useCart } from '../../context/CartContext';
 const Header = () => {
   const [openPopover, setOpenPopover] = useState(false);
 
-  const { state, dispatch } = useCart();
+  const { state, dispatch, getTotalCartItems, getTotalPriceCart } = useCart();
 
   const removeFromCart = (item) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: item });
@@ -113,7 +113,14 @@ const Header = () => {
                       })}
                     </div>
                   )}
-                  {state.cartItems.length !== 0 && <div className="py-5">Total: </div>}
+                  {state.cartItems.length !== 0 && (
+                    <div className="py-5 font-poppins">
+                      <p>Total Items: {getTotalCartItems()}</p>
+                      <p>
+                        Total Price: <span className="font-semibold">${getTotalPriceCart()}</span>
+                      </p>
+                    </div>
+                  )}
                 </PopoverContent>
               </Popover>
 
