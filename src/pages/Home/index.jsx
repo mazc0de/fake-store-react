@@ -17,21 +17,15 @@ import { useCart } from '../../context/CartContext';
 
 const Home = () => {
   const api = useAxios();
+  const { dispatch } = useCart();
   const { toastError } = useToast();
   const [categories, setCategories] = useState();
-
-  const { dispatch } = useCart();
+  const [newArrivalProducts, setNewArrivalProducts] = useState();
+  const [loading, setLoading] = useState({ categories: true, newArrival: true });
 
   const addToCart = (item) => {
     dispatch({ type: 'ADD_TO_CART', payload: item });
   };
-
-  const [loading, setLoading] = useState({
-    categories: true,
-    newArrival: true,
-  });
-
-  const [newArrivalProducts, setNewArrivalProducts] = useState();
 
   const fetchCategories = async () => {
     try {

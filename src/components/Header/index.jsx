@@ -78,15 +78,19 @@ const Header = () => {
             <div className="hidden items-center gap-x-3 lg:flex">
               <Popover open={openPopover} handler={setOpenPopover}>
                 <PopoverHandler {...triggers}>
-                  <ShoppingCartIcon className="h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary" />
+                  <ShoppingCartIcon
+                    className={`h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary ${
+                      openPopover && 'text-primary'
+                    }`}
+                  />
                 </PopoverHandler>
-                <PopoverContent {...triggers} className="z-50 flex w-96 flex-col gap-2">
+                <PopoverContent {...triggers} className="z-50 flex h-auto max-h-[450px] w-96 flex-col gap-2">
                   {state.cartItems.length === 0 ? (
                     <div className="flex items-center justify-center p-5">
                       <p>Your cart is empty</p>
                     </div>
                   ) : (
-                    <>
+                    <div className="overflow-y-scroll">
                       {state.cartItems?.map((cartItem) => {
                         return (
                           <div
@@ -94,7 +98,7 @@ const Header = () => {
                             className="flex flex-row items-center justify-between gap-5 border-b-2 py-2 font-poppins last:border-b-0"
                           >
                             <div className="flex flex-row gap-5">
-                              <img src={cartItem.image} alt="" className="h-auto w-10" />
+                              <img src={cartItem.image} alt="" className="h-auto w-16 object-cover" />
                               <div className="flex flex-col justify-between">
                                 <p>{cartItem.title}</p>
                                 <p>({cartItem.quantity}) pcs</p>
@@ -107,8 +111,9 @@ const Header = () => {
                           </div>
                         );
                       })}
-                    </>
+                    </div>
                   )}
+                  {state.cartItems.length !== 0 && <div className="py-5">Total: </div>}
                 </PopoverContent>
               </Popover>
 
