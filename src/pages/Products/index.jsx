@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
 
@@ -41,15 +42,16 @@ const Products = () => {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
           {products?.map((product) => {
             return (
-              <CardProduct
-                handleAddToCart={() => addToCart(product)}
-                key={product.id}
-                image={product.image}
-                title={product.title}
-                price={product.price}
-                rate={product.rating.rate}
-                count={product.rating.count}
-              />
+              <Link to={`/products/${product.id}`} key={product.id}>
+                <CardProduct
+                  handleAddToCart={() => addToCart(product)}
+                  image={product.image}
+                  title={product.title}
+                  price={product.price}
+                  rate={product.rating.rate}
+                  count={product.rating.count}
+                />
+              </Link>
             );
           })}
         </div>

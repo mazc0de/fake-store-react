@@ -1,9 +1,10 @@
+import { Link, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+
 import useAxios from '../../hooks/useAxios';
-import { useParams } from 'react-router-dom';
-import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
 import useToast from '../../hooks/useToast';
 import { useCart } from '../../context/CartContext';
+import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
 
 const ProductsCategory = () => {
   const api = useAxios();
@@ -41,15 +42,16 @@ const ProductsCategory = () => {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
           {products?.map((product) => {
             return (
-              <CardProduct
-                handleAddToCart={() => addToCart(product)}
-                key={product.id}
-                image={product.image}
-                title={product.title}
-                price={product.price}
-                rate={product.rating.rate}
-                count={product.rating.count}
-              />
+              <Link to={`/products/${product.id}`} key={product.id}>
+                <CardProduct
+                  handleAddToCart={() => addToCart(product)}
+                  image={product.image}
+                  title={product.title}
+                  price={product.price}
+                  rate={product.rating.rate}
+                  count={product.rating.count}
+                />
+              </Link>
             );
           })}
         </div>
