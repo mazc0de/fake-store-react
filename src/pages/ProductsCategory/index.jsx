@@ -3,14 +3,20 @@ import useAxios from '../../hooks/useAxios';
 import { useParams } from 'react-router-dom';
 import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
 import useToast from '../../hooks/useToast';
+import { useCart } from '../../context/CartContext';
 
 const ProductsCategory = () => {
   const api = useAxios();
+  const { dispatch } = useCart();
   const { category } = useParams();
   const { toastError } = useToast();
 
   const [products, setProducts] = useState();
   const [loading, setLoading] = useState(true);
+
+  const addToCart = (item) => {
+    dispatch({ type: 'ADD_TO_CART', payload: item });
+  };
 
   const fetchProductByCategory = async () => {
     try {
@@ -36,6 +42,7 @@ const ProductsCategory = () => {
           {products?.map((product) => {
             return (
               <CardProduct
+                handleAddToCart={() => addToCart(product)}
                 key={product.id}
                 image={product.image}
                 title={product.title}
