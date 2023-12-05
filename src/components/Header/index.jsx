@@ -46,7 +46,7 @@ const Header = () => {
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {navMenu?.map((item) => {
         return (
-          <NavLink to={item.slug} key={item.id}>
+          <NavLink to={item.slug} key={item.id} onClick={handleDrawer}>
             {({ isActive }) => (
               <Typography
                 as="li"
@@ -84,8 +84,10 @@ const Header = () => {
                         openPopover && 'text-primary'
                       }`}
                     />
-                    <div className="absolute bottom-0 right-0 h-4 w-fit rounded-full bg-primary px-1 text-center text-xs text-white">
-                      {getTotalCartItems()}
+                    <div className="absolute -bottom-[5px] -right-[10px] ">
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-poppins text-sm text-white">
+                        {getTotalCartItems()}
+                      </div>
                     </div>
                   </div>
                 </PopoverHandler>
@@ -138,13 +140,23 @@ const Header = () => {
 
               <UserCircleIcon className="h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary" />
             </div>
-            <IconButton variant="text" color="blue-gray" className="lg:hidden" onClick={handleDrawer}>
-              {open ? (
-                <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-              ) : (
-                <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-              )}
-            </IconButton>
+            <div className="flex">
+              <div className="relative mr-3 lg:hidden">
+                <ShoppingCartIcon className={`h-8 w-8 text-gray-500 transition-all duration-200`} />
+                <div className="absolute -bottom-[5px] -right-[10px] ">
+                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-poppins text-sm text-white">
+                    {getTotalCartItems()}
+                  </div>
+                </div>
+              </div>
+              <IconButton variant="text" color="blue-gray" className="lg:hidden" onClick={handleDrawer}>
+                {open ? (
+                  <XMarkIcon className="h-6 w-6" strokeWidth={2} />
+                ) : (
+                  <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+                )}
+              </IconButton>
+            </div>
           </div>
         </div>
       </Navbar>
@@ -168,11 +180,18 @@ const Header = () => {
         </div>
         <List>{navList}</List>
         <div className="flex">
-          <Button className="ml-5 mt-3 flex gap-x-2" size="sm">
-            <ShoppingCartIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
-            Cart
-          </Button>
-          <Button className="ml-5 mt-3 flex gap-x-2" size="sm">
+          <div className="relative">
+            <Button className="ml-5 mt-3 flex gap-x-2 bg-primary" size="sm">
+              <ShoppingCartIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
+              Cart
+            </Button>
+            <div className="absolute -right-[10px] top-0 ">
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-black font-poppins text-sm text-white">
+                {getTotalCartItems()}
+              </div>
+            </div>
+          </div>
+          <Button className="ml-5 mt-3 flex gap-x-2 bg-primary" size="sm">
             <UserCircleIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
             Profile
           </Button>
