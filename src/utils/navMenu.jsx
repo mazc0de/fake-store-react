@@ -9,14 +9,4 @@ export const navMenu = [
     title: 'Products',
     slug: '/products',
   },
-  {
-    id: 3,
-    title: 'About',
-    slug: '/about',
-  },
-  {
-    id: 4,
-    title: 'Contact Us',
-    slug: '/contact-us',
-  },
 ];
