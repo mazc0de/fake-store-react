@@ -7,7 +7,7 @@ const BreadcrumbsComponent = ({ menus }) => {
     <Breadcrumbs separator={<ChevronRightIcon className="w-5" />} className="">
       {menus?.map((menu, index) => {
         return (
-          <Link to={menu.link} className={`${menu.active ? 'opacity-60' : ''}`} key={index}>
+          <Link to={menu.link} className={`${menu.active ? 'opacity-60' : ''} font-poppins`} key={index}>
             <span>{menu.title}</span>
           </Link>
         );
