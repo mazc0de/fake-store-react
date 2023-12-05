@@ -91,7 +91,10 @@ const Header = () => {
                     </div>
                   </div>
                 </PopoverHandler>
-                <PopoverContent {...triggers} className="z-50 flex h-auto max-h-[450px] w-96 flex-col gap-2">
+                <PopoverContent
+                  {...triggers}
+                  className="z-50 flex h-auto max-h-[450px] w-96 flex-col gap-2 font-poppins"
+                >
                   {state.cartItems.length === 0 ? (
                     <div className="flex items-center justify-center p-5">
                       <p>Your cart is empty</p>
