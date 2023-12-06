@@ -47,6 +47,13 @@ const cartReducer = (state, action) => {
       } else {
         return state;
       }
+    case 'APPLY_PROMO':
+      console.log(action.payload);
+      return {
+        ...state,
+        promoCode: action.payload.promoCode,
+        promoDiscount: action.payload.promoDiscount,
+      };
     case 'REMOVE_FROM_CART':
       const removeCartItems = state.cartItems.filter((item) => item.id !== action.payload.id);
       return {
@@ -59,7 +66,7 @@ const cartReducer = (state, action) => {
 };
 
 export const CartProvider = ({ children }) => {
-  const initialState = { cartItems: [] };
+  const initialState = { cartItems: [], promoCode: '', promoDiscount: 0, discountPrice: 0 };
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
   const getTotalCartItems = () => {
@@ -67,7 +74,14 @@ export const CartProvider = ({ children }) => {
   };
 
   const getTotalPriceCart = () => {
-    return state.cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+    let totalPrice = state.cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+    let discount = state.promoDiscount;
+    let discountPrice = Math.max(0, totalPrice * discount);
+    if (discount) {
+      return { totalPrice, discountPrice, priceAfterDiscount: Math.max(0, totalPrice - discountPrice) };
+    } else {
+      return { totalPrice };
+    }
   };
 
   return (

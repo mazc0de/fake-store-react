@@ -71,7 +71,7 @@ const Header = () => {
       <Navbar className="sticky top-0 z-10 flex h-max max-w-full rounded-none px-4 py-2 lg:block lg:h-20 lg:px-8 lg:py-4">
         <div className="mx-auto flex w-full items-center justify-between text-blue-gray-900 lg:max-w-screen-xl">
           <Typography as="a" href="#" className="mr-4 cursor-pointer py-1.5 font-russoOne text-2xl font-medium">
-            FAKE STORE
+            FAKE STORE {state.promoCode}
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
@@ -116,7 +116,10 @@ const Header = () => {
                             </div>
                             <div className="flex flex-row gap-3">
                               <p className="font-semibold">${cartItem.price}</p>
-                              <TrashIcon className="w-5 text-primary" onClick={() => removeFromCart(cartItem)} />
+                              <TrashIcon
+                                className="w-5 cursor-pointer text-primary"
+                                onClick={() => removeFromCart(cartItem)}
+                              />
                             </div>
                           </div>
                         );
@@ -127,7 +130,7 @@ const Header = () => {
                     <div className="flex items-center justify-between py-5 font-poppins">
                       <div className="flex flex-col gap-2">
                         <p>
-                          Total Price: <span className="font-semibold">${getTotalPriceCart().toFixed(2)}</span>
+                          {/* Total Price: <span className="font-semibold">${getTotalPriceCart().toFixed(2)}</span> */}
                         </p>
                         <p>Total Items: {getTotalCartItems()}</p>
                       </div>
