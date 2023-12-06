@@ -70,6 +70,12 @@ const Cart = () => {
             state.cartItems?.length === 0 && 'lg:col-span-3'
           }`}
         >
+      <div className="grid grid-cols-1 gap-2 font-poppins lg:grid-cols-3">
+        <div
+          className={`flex flex-col gap-3 rounded-lg border p-5 lg:col-span-2 ${
+            state.cartItems?.length === 0 && 'lg:col-span-3'
+          }`}
+        >
           <div>
             {state.cartItems?.length === 0 ? (
               <div className="flex items-center justify-center p-5">
@@ -80,6 +86,8 @@ const Cart = () => {
                 {state.cartItems?.map((item) => {
                   return (
                     <div className="flex flex-col border-b-2 font-poppins last:border-none" key={item.id}>
+                      <div className="my-3 flex flex-row gap-2 lg:gap-5">
+                        <div className="w-1/5 lg:w-20">
                       <div className="my-3 flex flex-row gap-2 lg:gap-5">
                         <div className="w-1/5 lg:w-20">
                           <img src={item.image} alt={item.title} />
@@ -116,6 +124,7 @@ const Cart = () => {
           </div>
         </div>
         {state.cartItems?.length !== 0 && (
+          <div className="flex h-96 flex-col gap-3 rounded-lg border p-5">
           <div className="flex h-96 flex-col gap-3 rounded-lg border p-5">
             <h3 className="text-lg font-semibold">Order Summary</h3>
             <div className="flex justify-between">
