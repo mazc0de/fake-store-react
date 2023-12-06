@@ -22,6 +22,7 @@ const Header = () => {
   const [openPopover, setOpenPopover] = useState(false);
 
   const { state, dispatch, getTotalCartItems, getTotalPriceCart } = useCart();
+  const { totalPrice } = getTotalPriceCart();
 
   const removeFromCart = (item) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: item });
@@ -130,7 +131,7 @@ const Header = () => {
                     <div className="flex items-center justify-between py-5 font-poppins">
                       <div className="flex flex-col gap-2">
                         <p>
-                          {/* Total Price: <span className="font-semibold">${getTotalPriceCart().toFixed(2)}</span> */}
+                          Total Price: <span className="font-semibold">${totalPrice.toFixed(2)}</span>
                         </p>
                         <p>Total Items: {getTotalCartItems()}</p>
                       </div>

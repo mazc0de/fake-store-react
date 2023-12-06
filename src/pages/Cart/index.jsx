@@ -8,7 +8,6 @@ const Cart = () => {
   const { state, dispatch, getTotalPriceCart } = useCart();
 
   const { totalPrice, discountPrice, priceAfterDiscount } = getTotalPriceCart();
-  console.log({ totalPrice, discountPrice, priceAfterDiscount });
 
   const [promoCode, setPromoCode] = useState();
   const [promoDiscount, setPromoDiscount] = useState();
@@ -70,12 +69,6 @@ const Cart = () => {
             state.cartItems?.length === 0 && 'lg:col-span-3'
           }`}
         >
-      <div className="grid grid-cols-1 gap-2 font-poppins lg:grid-cols-3">
-        <div
-          className={`flex flex-col gap-3 rounded-lg border p-5 lg:col-span-2 ${
-            state.cartItems?.length === 0 && 'lg:col-span-3'
-          }`}
-        >
           <div>
             {state.cartItems?.length === 0 ? (
               <div className="flex items-center justify-center p-5">
@@ -88,19 +81,14 @@ const Cart = () => {
                     <div className="flex flex-col border-b-2 font-poppins last:border-none" key={item.id}>
                       <div className="my-3 flex flex-row gap-2 lg:gap-5">
                         <div className="w-1/5 lg:w-20">
-                      <div className="my-3 flex flex-row gap-2 lg:gap-5">
-                        <div className="w-1/5 lg:w-20">
                           <img src={item.image} alt={item.title} />
                         </div>
                         <div className="flex w-3/5 flex-col justify-between gap-2">
-                          <p className="text-sm font-bold md:text-base lg:text-lg">{item.title}</p>
-                          <p className="text-sm font-semibold md:text-lg lg:text-2xl">${item.price}</p>
+                          <p className="text-sm font-bold lg:text-lg">{item.title}</p>
+                          <p className="text-sm font-semibold lg:text-2xl">${item.price}</p>
                         </div>
                         <div className="flex w-2/5 flex-col items-end justify-between">
-                          <TrashIcon
-                            className="w-5 cursor-pointer text-primary md:w-7"
-                            onClick={() => removeFromCart(item)}
-                          />
+                          <TrashIcon className="w-5 cursor-pointer text-primary" onClick={() => removeFromCart(item)} />
                           <div className="flex items-center gap-3">
                             <IconButton
                               size="sm"
@@ -110,8 +98,8 @@ const Cart = () => {
                               <MinusIcon className="w-5" />
                             </IconButton>
                             {item.quantity}
-                            <IconButton size="sm" className="bg-primary" onClick={() => addQuantity(item)}>
-                              <PlusIcon className="w-5" />
+                            <IconButton size="sm" className="bg-primary">
+                              <PlusIcon className="w-5" onClick={() => addQuantity(item)} />
                             </IconButton>
                           </div>
                         </div>
@@ -124,7 +112,6 @@ const Cart = () => {
           </div>
         </div>
         {state.cartItems?.length !== 0 && (
-          <div className="flex h-96 flex-col gap-3 rounded-lg border p-5">
           <div className="flex h-96 flex-col gap-3 rounded-lg border p-5">
             <h3 className="text-lg font-semibold">Order Summary</h3>
             <div className="flex justify-between">
