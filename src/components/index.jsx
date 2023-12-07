@@ -4,5 +4,6 @@ import Footer from './Footer';
 import CardProduct from './CardProduct';
 import SectionTitle from './SectionTitle';
 import LoadingSpinner from './LoadingSpinner';
+import BreadcrumbsComponent from './BreadcrumbsComponent';
 
-export { Layout, Header, Footer, CardProduct, SectionTitle, LoadingSpinner };
+export { Layout, Header, Footer, CardProduct, SectionTitle, LoadingSpinner, BreadcrumbsComponent };

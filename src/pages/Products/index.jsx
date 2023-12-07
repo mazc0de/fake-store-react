@@ -1,15 +1,22 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { CardProduct, LoadingSpinner, SectionTitle } from '../../components';
+import { BreadcrumbsComponent, CardProduct, LoadingSpinner } from '../../components';
 
 import useAxios from '../../hooks/useAxios';
 import useToast from '../../hooks/useToast';
+import { useCart } from '../../context/CartContext';
 
 const Products = () => {
   const api = useAxios();
+  const { dispatch } = useCart();
   const { toastError } = useToast();
 
   const [products, setProducts] = useState();
   const [loading, setLoading] = useState(true);
+
+  const addToCart = (item) => {
+    dispatch({ type: 'ADD_TO_CART', payload: item });
+  };
 
   const fetchProducts = async () => {
     try {
@@ -26,23 +33,38 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  const breadcrumbsMenu = [
+    {
+      title: 'Home',
+      link: '/',
+      active: false,
+    },
+    {
+      title: 'Products',
+      link: '/products',
+      active: true,
+    },
+  ];
+
   return (
     <>
-      <SectionTitle title="All Products" />
+      <BreadcrumbsComponent menus={breadcrumbsMenu} />
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
+        <div className="mt-3 grid grid-cols-1 gap-5 lg:grid-cols-4">
           {products?.map((product) => {
             return (
-              <CardProduct
-                key={product.id}
-                image={product.image}
-                title={product.title}
-                price={product.price}
-                rate={product.rating.rate}
-                count={product.rating.count}
-              />
+              <Link to={`/products/${product.id}`} key={product.id}>
+                <CardProduct
+                  handleAddToCart={() => addToCart(product)}
+                  image={product.image}
+                  title={product.title}
+                  price={product.price}
+                  rate={product.rating.rate}
+                  count={product.rating.count}
+                />
+              </Link>
             );
           })}
         </div>

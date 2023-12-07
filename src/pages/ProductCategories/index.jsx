@@ -8,7 +8,7 @@ import { Card } from '@material-tailwind/react';
 
 import useToast from '../../hooks/useToast';
 import useAxios from '../../hooks/useAxios';
-import { LoadingSpinner, SectionTitle } from '../../components';
+import { BreadcrumbsComponent, LoadingSpinner } from '../../components';
 
 const ProductCategories = () => {
   const api = useAxios();
@@ -70,14 +70,27 @@ const ProductCategories = () => {
     fetchCategories();
   }, []);
 
+  const breadcrumbsMenu = [
+    {
+      title: 'Home',
+      link: '/',
+      active: false,
+    },
+    {
+      title: 'Categories',
+      link: '/products/categories',
+      active: true,
+    },
+  ];
+
   return (
     <>
-      <div className="my-6 flex h-[70vh] flex-col items-center justify-center lg:block">
-        <SectionTitle title="Categories" />
+      <div className="my-6 flex h-[70vh] flex-col items-center justify-center  lg:block">
+        <BreadcrumbsComponent menus={breadcrumbsMenu} />
         {loading?.categories ? (
           <LoadingSpinner />
         ) : (
-          <div className="grid grid-cols-2 gap-3 lg:flex lg:justify-between">
+          <div className="mt-3 grid grid-cols-2 gap-3 lg:flex lg:justify-between">
             {categories?.map((category) => {
               return (
                 <Link to={`/products/categories/${category.slug}`}>
