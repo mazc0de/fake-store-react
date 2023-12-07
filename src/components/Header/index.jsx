@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Bars3Icon, ShoppingCartIcon, TrashIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
   Navbar,
@@ -15,11 +15,15 @@ import {
 } from '@material-tailwind/react';
 
 import Footer from '../Footer';
+import ProfileMenu from '../ProfileMenu';
 import { navMenu } from '../../utils/navMenu';
 import { useCart } from '../../context/CartContext';
+import AuthContext from '../../context/AuthContext';
 
 const Header = () => {
   const [openPopover, setOpenPopover] = useState(false);
+
+  const { user } = useContext(AuthContext);
 
   const { state, dispatch, getTotalCartItems, getTotalPriceCart } = useCart();
   const { totalPrice } = getTotalPriceCart();
@@ -76,7 +80,7 @@ const Header = () => {
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
-            <div className="hidden items-center gap-x-3 lg:flex">
+            <div className="hidden items-center gap-x-5 lg:flex">
               <Popover open={openPopover} handler={setOpenPopover}>
                 <PopoverHandler {...triggers}>
                   <div className="relative">
@@ -146,8 +150,7 @@ const Header = () => {
                   )}
                 </PopoverContent>
               </Popover>
-
-              <UserCircleIcon className="h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary" />
+              {user && <ProfileMenu />}
             </div>
             <div className="flex">
               <Link to="/cart">

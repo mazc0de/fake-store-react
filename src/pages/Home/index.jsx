@@ -109,7 +109,7 @@ const Home = () => {
     <div className="mx-5">
       <Carousel className="rounded-xl" loop autoplay>
         {carouselImage?.map((image, index) => {
-          return <img src={image.image} alt={image.image} className="h-72 w-full object-cover" key={index} />;
+          return <img src={image.image} alt={image.image} className="w-full object-cover lg:h-72" key={index} />;
         })}
       </Carousel>
 
@@ -123,7 +123,7 @@ const Home = () => {
               return (
                 <Link to={`/products/categories/${category.slug}`} key={category.id}>
                   <Card
-                    className="group flex h-28 w-28 cursor-pointer select-none flex-col items-center justify-center border  p-10 text-center font-poppins transition-all duration-200 hover:scale-105 hover:shadow-lg lg:h-40 lg:w-40 lg:p-5"
+                    className="group flex h-36 w-36 cursor-pointer select-none flex-col items-center justify-center border p-10  text-center font-poppins transition-all duration-200 hover:scale-105 hover:shadow-lg md:h-40 md:w-40 lg:h-48 lg:w-48 lg:p-5"
                     key={category.id}
                   >
                     <div>{category.icon}</div>
