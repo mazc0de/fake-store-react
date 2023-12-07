@@ -44,6 +44,11 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  const logOutUser = () => {
+    localStorage.removeItem('auth');
+    window.location.href = '/login';
+  };
+
   useEffect(() => {
     if (token) {
       const decodeToken = jwtDecode(token);
@@ -52,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, [token, loading]);
 
-  const value = { token, user, loginUser, loadingButton, error };
+  const value = { token, user, loginUser, loadingButton, error, logOutUser };
   return <AuthContext.Provider value={value}>{loading ? null : children}</AuthContext.Provider>;
 };
 
