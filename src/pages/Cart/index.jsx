@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { BreadcrumbsComponent, SectionTitle } from '../../components';
 import { useCart } from '../../context/CartContext';
-import { MinusIcon, PlusIcon, TagIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { Button, IconButton, Input } from '@material-tailwind/react';
+import { MinusIcon, PlusIcon, ShoppingBagIcon, TagIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
+
+import { BreadcrumbsComponent, SectionTitle } from '../../components';
 
 const Cart = () => {
   const { state, dispatch, getTotalPriceCart } = useCart();
@@ -10,6 +11,7 @@ const Cart = () => {
   const { totalPrice, discountPrice, priceAfterDiscount } = getTotalPriceCart();
 
   const [promoCode, setPromoCode] = useState();
+  const [promoCodeStatus, setPromoCodeStatus] = useState();
   const [promoDiscount, setPromoDiscount] = useState();
 
   const removeFromCart = (item) => {
@@ -24,13 +26,24 @@ const Cart = () => {
     let promoDiscount = 0;
     if (promoCode === 'HARBOLNAS') {
       promoDiscount = 0.2;
+      setPromoCodeStatus(true);
     } else if (promoCode === '1212') {
       promoDiscount = 0.22;
+      setPromoCodeStatus(true);
     } else {
+      setPromoCodeStatus(false);
       setPromoDiscount(0);
+      dispatch({ type: 'APPLY_PROMO', payload: { promoCode: '', promoDiscount: 0 } });
+      return;
     }
-    console.log();
+
     await dispatch({ type: 'APPLY_PROMO', payload: { promoCode, promoDiscount } });
+  };
+
+  const handleRemovePromoCode = () => {
+    setPromoCodeStatus();
+    setPromoCode('');
+    dispatch({ type: 'APPLY_PROMO', payload: { promoCode: '', promoDiscount: 0 } });
   };
 
   const handleReduceQuantity = (itemId, item) => {
@@ -45,6 +58,10 @@ const Cart = () => {
   const handleChangePromoCode = (e) => {
     setPromoCode(e.target.value);
   };
+
+  useEffect(() => {
+    setPromoCode(state?.promoCode);
+  }, []);
 
   const breadcrumbsMenu = [
     {
@@ -98,8 +115,8 @@ const Cart = () => {
                               <MinusIcon className="w-5" />
                             </IconButton>
                             {item.quantity}
-                            <IconButton size="sm" className="bg-primary">
-                              <PlusIcon className="w-5" onClick={() => addQuantity(item)} />
+                            <IconButton size="sm" className="bg-primary" onClick={() => addQuantity(item)}>
+                              <PlusIcon className="w-5" />
                             </IconButton>
                           </div>
                         </div>
@@ -112,39 +129,68 @@ const Cart = () => {
           </div>
         </div>
         {state.cartItems?.length !== 0 && (
-          <div className="flex h-96 flex-col gap-3 rounded-lg border p-5">
-            <h3 className="text-lg font-semibold">Order Summary</h3>
-            <div className="flex justify-between">
-              <p>Subtotal</p>
-              <p className="font-semibold">${totalPrice.toFixed(2)}</p>
-            </div>
-            {state.promoCode && (
-              <>
-                <div className="flex justify-between">
-                  <p>Discount</p>
-                  <p className="font-semibold">${discountPrice.toFixed(2)}</p>
-                </div>
+          <div className="flex h-96 flex-col justify-between gap-3 rounded-lg border p-5">
+            <div className="flex flex-col gap-2">
+              <h3 className="text-lg font-semibold">Order Summary</h3>
+              <div className="flex justify-between">
+                <p>Subtotal</p>
+                <p className="font-semibold">${totalPrice.toFixed(2)}</p>
+              </div>
+              {state?.promoCode && (
+                <>
+                  <div className="flex justify-between">
+                    <p>Discount</p>
+                    <p className="font-semibold">${discountPrice?.toFixed(2)}</p>
+                  </div>
+                </>
+              )}
+              {state?.promoCode ? (
                 <div className="flex justify-between">
                   <p className="text-lg font-semibold">Total</p>
-                  <p className="text-lg font-semibold">${priceAfterDiscount.toFixed(2)}</p>
+                  <p className="text-lg font-semibold">${priceAfterDiscount?.toFixed(2)}</p>
                 </div>
-              </>
-            )}
-            <div className="border-b-2"></div>
-            <div className="flex flex-col gap-2">
-              <Input
-                onChange={handleChangePromoCode}
-                icon={<TagIcon className="w-5" />}
-                type="text"
-                placeholder="Add Promo Code"
-                className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
-                labelProps={{
-                  className: 'hidden',
-                }}
-                containerProps={{ className: 'min-w-[100px]' }}
-              />
-              <Button className="self-end bg-primary" onClick={handleApplyPromoCode}>
-                Apply
+              ) : (
+                <div className="flex justify-between">
+                  <p className="text-lg font-semibold">Total</p>
+                  <p className="text-lg font-semibold">${totalPrice?.toFixed(2)}</p>
+                </div>
+              )}
+              <div className="border-b-2"></div>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-center gap-2">
+                  <Input
+                    value={promoCode}
+                    onChange={handleChangePromoCode}
+                    icon={<TagIcon className="w-5" />}
+                    type="text"
+                    placeholder="Add Promo Code"
+                    className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
+                    labelProps={{
+                      className: 'hidden',
+                    }}
+                    containerProps={{ className: 'min-w-[100px]' }}
+                  />
+
+                  {promoCode && (
+                    <IconButton onClick={handleRemovePromoCode}>
+                      <XMarkIcon className="w-5" />
+                    </IconButton>
+                  )}
+                </div>
+
+                {promoCodeStatus && promoCodeStatus !== null && promoCodeStatus !== undefined && <>Promo is valid</>}
+                {promoCodeStatus === false && promoCodeStatus !== null && promoCodeStatus !== undefined && (
+                  <>Promo is not valid</>
+                )}
+
+                <Button className="self-end bg-primary" onClick={handleApplyPromoCode}>
+                  Apply
+                </Button>
+              </div>
+            </div>
+            <div>
+              <Button className="flex w-full flex-row items-center justify-center gap-2 bg-primary">
+                Checkout <ShoppingBagIcon className="w-5" />
               </Button>
             </div>
           </div>

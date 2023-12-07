@@ -48,7 +48,6 @@ const cartReducer = (state, action) => {
         return state;
       }
     case 'APPLY_PROMO':
-      console.log(action.payload);
       return {
         ...state,
         promoCode: action.payload.promoCode,
