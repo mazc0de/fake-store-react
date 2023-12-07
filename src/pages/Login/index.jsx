@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Input, Spinner } from '@material-tailwind/react';
+import { Alert, Button, Input, Spinner } from '@material-tailwind/react';
 
 import { useContext } from 'react';
 import { Navigate } from 'react-router';
@@ -36,10 +36,18 @@ const Login = () => {
       <div className="hidden lg:block lg:w-1/2">
         <img src={SideImage} alt="side-image" />
       </div>
-      <div className="lg:flex lg:w-1/2 lg:flex-col lg:justify-center lg:gap-2 lg:px-20">
+      <div className="lg:flex lg:w-1/2 lg:flex-col lg:justify-center lg:gap-2 lg:px-8">
         <div className="flex flex-col gap-2">
           <p className="font-poppins text-xl font-semibold">Log In to Fake Store</p>
           <p className="font-poppins text-sm">Enter your details below</p>
+          <Alert color="amber">
+            <p>
+              Username : <span className="font-semibold">mor_2314</span>
+            </p>
+            <p>
+              Password : <span className="font-semibold">83r5^_</span>
+            </p>
+          </Alert>
           {error?.login && <p className="text-red-400">{error?.message}</p>}
         </div>
         <form onSubmit={handleSubmit(loginUser)}>
