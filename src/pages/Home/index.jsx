@@ -106,14 +106,14 @@ const Home = () => {
   ];
 
   return (
-    <div className="mx-5">
+    <div className="mx-2">
       <Carousel className="rounded-xl" loop autoplay>
         {carouselImage?.map((image, index) => {
           return <img src={image.image} alt={image.image} className="w-full object-cover lg:h-72" key={index} />;
         })}
       </Carousel>
 
-      <div className="my-6 flex flex-col items-center justify-center lg:block">
+      <div className="my-3 flex flex-col items-center justify-center lg:block">
         <SectionTitle title="Categories" />
         {loading?.categories ? (
           <LoadingSpinner />

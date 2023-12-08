@@ -1,18 +1,19 @@
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { useCart } from '../../context/CartContext';
-import { Button, IconButton, Input } from '@material-tailwind/react';
+import { Button, IconButton, Input, Spinner } from '@material-tailwind/react';
 import { MinusIcon, PlusIcon, ShoppingBagIcon, TagIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
+import { useCart } from '../../context/CartContext';
 import { BreadcrumbsComponent, SectionTitle } from '../../components';
 
 const Cart = () => {
   const { state, dispatch, getTotalPriceCart } = useCart();
-
   const { totalPrice, discountPrice, priceAfterDiscount } = getTotalPriceCart();
 
   const [promoCode, setPromoCode] = useState();
-  const [promoCodeStatus, setPromoCodeStatus] = useState();
   const [promoDiscount, setPromoDiscount] = useState();
+  const [promoCodeStatus, setPromoCodeStatus] = useState();
+  const [loadingPromoCodeButton, setLoadingPromoCodeButton] = useState(false);
 
   const removeFromCart = (item) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: item });
@@ -24,20 +25,30 @@ const Cart = () => {
 
   const handleApplyPromoCode = async () => {
     let promoDiscount = 0;
+    setLoadingPromoCodeButton(true);
     if (promoCode === 'HARBOLNAS') {
       promoDiscount = 0.2;
-      setPromoCodeStatus(true);
+      setTimeout(() => {
+        setPromoCodeStatus(true);
+      }, 1000);
     } else if (promoCode === '1212') {
       promoDiscount = 0.22;
-      setPromoCodeStatus(true);
+      setTimeout(() => {
+        setPromoCodeStatus(true);
+      }, 1000);
     } else {
-      setPromoCodeStatus(false);
       setPromoDiscount(0);
-      dispatch({ type: 'APPLY_PROMO', payload: { promoCode: '', promoDiscount: 0 } });
+      setTimeout(() => {
+        dispatch({ type: 'APPLY_PROMO', payload: { promoCode: '', promoDiscount: 0 } });
+        setPromoCodeStatus(false);
+        setLoadingPromoCodeButton(false);
+      }, 1000);
       return;
     }
-
-    await dispatch({ type: 'APPLY_PROMO', payload: { promoCode, promoDiscount } });
+    setTimeout(() => {
+      dispatch({ type: 'APPLY_PROMO', payload: { promoCode, promoDiscount } });
+      setLoadingPromoCodeButton(false);
+    }, 1000);
   };
 
   const handleRemovePromoCode = () => {
@@ -129,12 +140,16 @@ const Cart = () => {
           </div>
         </div>
         {state.cartItems?.length !== 0 && (
-          <div className="flex h-96 flex-col justify-between gap-3 rounded-lg border p-5">
+          <div className="flex h-fit flex-col justify-between gap-3 rounded-lg border p-5">
             <div className="flex flex-col gap-2">
               <h3 className="text-lg font-semibold">Order Summary</h3>
               <div className="flex justify-between">
                 <p>Subtotal</p>
                 <p className="font-semibold">${totalPrice.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between">
+                <p>Shipping</p>
+                <p className="font-semibold">FREE</p>
               </div>
               {state?.promoCode && (
                 <>
@@ -178,20 +193,33 @@ const Cart = () => {
                   )}
                 </div>
 
-                {promoCodeStatus && promoCodeStatus !== null && promoCodeStatus !== undefined && <>Promo is valid</>}
+                {promoCodeStatus && promoCodeStatus !== null && promoCodeStatus !== undefined && (
+                  <p className="text-green-700">Promo is valid</p>
+                )}
                 {promoCodeStatus === false && promoCodeStatus !== null && promoCodeStatus !== undefined && (
-                  <>Promo is not valid</>
+                  <p className="text-primary">Promo is not valid</p>
                 )}
 
+                <div className="rounded-lg bg-light-blue-400 p-5">
+                  <p className="text-sm">
+                    Use Coupon code <span className="font-semibold">1212</span> to get 22% off
+                  </p>
+                  <p className="text-sm">
+                    Use Coupon code <span className="font-semibold">HARBOLNAS</span> to get 20% off
+                  </p>
+                </div>
+
                 <Button className="self-end bg-primary" onClick={handleApplyPromoCode}>
-                  Apply
+                  {loadingPromoCodeButton ? <Spinner className="bg-primary" /> : 'Apply'}
                 </Button>
               </div>
             </div>
             <div>
-              <Button className="flex w-full flex-row items-center justify-center gap-2 bg-primary">
-                Checkout <ShoppingBagIcon className="w-5" />
-              </Button>
+              <Link to="/checkout">
+                <Button className="flex w-full flex-row items-center justify-center gap-2 bg-primary">
+                  Checkout <ShoppingBagIcon className="w-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         )}

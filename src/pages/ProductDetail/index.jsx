@@ -59,9 +59,9 @@ const ProductDetail = () => {
       <BreadcrumbsComponent menus={breadcrumbsMenu} />
 
       {loading ? (
-        <>
+        <div className="mt-3">
           <LoadingSpinner />
-        </>
+        </div>
       ) : (
         <>
           <div className=" mt-3 grid grid-cols-1 gap-2 font-poppins lg:grid-cols-2">

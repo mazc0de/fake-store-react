@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { Bars3Icon, ShoppingCartIcon, TrashIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, PowerIcon, TrashIcon, XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import {
-  Navbar,
-  Typography,
+  List,
   Button,
+  Drawer,
+  Navbar,
   Popover,
+  Typography,
+  IconButton,
   PopoverHandler,
   PopoverContent,
-  Drawer,
-  IconButton,
-  List,
 } from '@material-tailwind/react';
 
 import Footer from '../Footer';
@@ -21,9 +21,10 @@ import { useCart } from '../../context/CartContext';
 import AuthContext from '../../context/AuthContext';
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
   const [openPopover, setOpenPopover] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, logOutUser } = useContext(AuthContext);
 
   const { state, dispatch, getTotalCartItems, getTotalPriceCart } = useCart();
   const { totalPrice } = getTotalPriceCart();
@@ -31,8 +32,6 @@ const Header = () => {
   const removeFromCart = (item) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: item });
   };
-
-  const [open, setOpen] = useState(false);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -75,102 +74,110 @@ const Header = () => {
     <div className="max-h-screen w-full overflow-y-auto">
       <Navbar className="sticky top-0 z-10 flex h-max max-w-full rounded-none px-4 py-2 lg:block lg:h-20 lg:px-8 lg:py-4">
         <div className="mx-auto flex w-full items-center justify-between text-blue-gray-900 lg:max-w-screen-xl">
-          <Typography as="a" href="#" className="mr-4 cursor-pointer py-1.5 font-russoOne text-2xl font-medium">
-            FAKE STORE
-          </Typography>
+          <Link to="/">
+            <Typography as="a" href="#" className="mr-4 cursor-pointer py-1.5 font-russoOne text-2xl font-medium">
+              FAKE STORE
+            </Typography>
+          </Link>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
             <div className="hidden items-center gap-x-5 lg:flex">
-              <Popover open={openPopover} handler={setOpenPopover}>
-                <PopoverHandler {...triggers}>
-                  <div className="relative">
-                    <ShoppingCartIcon
-                      className={`h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary ${
-                        openPopover && 'text-primary'
-                      }`}
-                    />
+              {user && (
+                <>
+                  <Popover open={openPopover} handler={setOpenPopover}>
+                    <PopoverHandler {...triggers}>
+                      <div className="relative">
+                        <ShoppingCartIcon
+                          className={`h-8 w-8 text-gray-500 transition-all duration-200 hover:text-primary ${
+                            openPopover && 'text-primary'
+                          }`}
+                        />
+                        <div className="absolute -bottom-[5px] -right-[10px] ">
+                          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-poppins text-sm text-white">
+                            {getTotalCartItems()}
+                          </div>
+                        </div>
+                      </div>
+                    </PopoverHandler>
+                    <PopoverContent
+                      {...triggers}
+                      className="z-50 flex h-auto max-h-[450px] w-96 flex-col gap-2 font-poppins"
+                    >
+                      {state.cartItems.length === 0 ? (
+                        <div className="flex items-center justify-center p-5">
+                          <p>Your cart is empty</p>
+                        </div>
+                      ) : (
+                        <div className="overflow-y-scroll">
+                          {state.cartItems?.map((cartItem) => {
+                            return (
+                              <div
+                                key={cartItem.id}
+                                className="mr-1 flex flex-row items-center justify-between gap-5 border-b-2 py-2 font-poppins last:border-b-0"
+                              >
+                                <div className="flex flex-row gap-5">
+                                  <img src={cartItem.image} alt={cartItem.title} className="h-auto w-16 object-cover" />
+                                  <div className="flex flex-col justify-between">
+                                    <p>{cartItem.title}</p>
+                                    <p>({cartItem.quantity}) pcs</p>
+                                  </div>
+                                </div>
+                                <div className="flex flex-row gap-3">
+                                  <p className="font-semibold">${cartItem.price}</p>
+                                  <TrashIcon
+                                    className="w-5 cursor-pointer text-primary"
+                                    onClick={() => removeFromCart(cartItem)}
+                                  />
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                      {state.cartItems.length !== 0 && (
+                        <div className="flex items-center justify-between py-5 font-poppins">
+                          <div className="flex flex-col gap-2">
+                            <p>
+                              Total Price: <span className="font-semibold">${totalPrice.toFixed(2)}</span>
+                            </p>
+                            <p>Total Items: {getTotalCartItems()}</p>
+                          </div>
+                          <div>
+                            <Link to="/cart">
+                              <Button size="sm" className="bg-primary">
+                                Checkout
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+                    </PopoverContent>
+                  </Popover>
+                  <ProfileMenu />
+                </>
+              )}
+            </div>
+            {user && (
+              <div className="flex">
+                <Link to="/cart">
+                  <div className="relative mr-3 lg:hidden">
+                    <ShoppingCartIcon className={`h-8 w-8 text-gray-500 transition-all duration-200`} />
                     <div className="absolute -bottom-[5px] -right-[10px] ">
                       <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-poppins text-sm text-white">
                         {getTotalCartItems()}
                       </div>
                     </div>
                   </div>
-                </PopoverHandler>
-                <PopoverContent
-                  {...triggers}
-                  className="z-50 flex h-auto max-h-[450px] w-96 flex-col gap-2 font-poppins"
-                >
-                  {state.cartItems.length === 0 ? (
-                    <div className="flex items-center justify-center p-5">
-                      <p>Your cart is empty</p>
-                    </div>
+                </Link>
+                <IconButton variant="text" color="blue-gray" className="lg:hidden" onClick={handleDrawer}>
+                  {open ? (
+                    <XMarkIcon className="h-6 w-6" strokeWidth={2} />
                   ) : (
-                    <div className="overflow-y-scroll">
-                      {state.cartItems?.map((cartItem) => {
-                        return (
-                          <div
-                            key={cartItem.id}
-                            className="mr-1 flex flex-row items-center justify-between gap-5 border-b-2 py-2 font-poppins last:border-b-0"
-                          >
-                            <div className="flex flex-row gap-5">
-                              <img src={cartItem.image} alt={cartItem.title} className="h-auto w-16 object-cover" />
-                              <div className="flex flex-col justify-between">
-                                <p>{cartItem.title}</p>
-                                <p>({cartItem.quantity}) pcs</p>
-                              </div>
-                            </div>
-                            <div className="flex flex-row gap-3">
-                              <p className="font-semibold">${cartItem.price}</p>
-                              <TrashIcon
-                                className="w-5 cursor-pointer text-primary"
-                                onClick={() => removeFromCart(cartItem)}
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    <Bars3Icon className="h-6 w-6" strokeWidth={2} />
                   )}
-                  {state.cartItems.length !== 0 && (
-                    <div className="flex items-center justify-between py-5 font-poppins">
-                      <div className="flex flex-col gap-2">
-                        <p>
-                          Total Price: <span className="font-semibold">${totalPrice.toFixed(2)}</span>
-                        </p>
-                        <p>Total Items: {getTotalCartItems()}</p>
-                      </div>
-                      <div>
-                        <Link to="/cart">
-                          <Button size="sm" className="bg-primary">
-                            Checkout
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  )}
-                </PopoverContent>
-              </Popover>
-              {user && <ProfileMenu />}
-            </div>
-            <div className="flex">
-              <Link to="/cart">
-                <div className="relative mr-3 lg:hidden">
-                  <ShoppingCartIcon className={`h-8 w-8 text-gray-500 transition-all duration-200`} />
-                  <div className="absolute -bottom-[5px] -right-[10px] ">
-                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-poppins text-sm text-white">
-                      {getTotalCartItems()}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-              <IconButton variant="text" color="blue-gray" className="lg:hidden" onClick={handleDrawer}>
-                {open ? (
-                  <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-                ) : (
-                  <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-                )}
-              </IconButton>
-            </div>
+                </IconButton>
+              </div>
+            )}
           </div>
         </div>
       </Navbar>
@@ -207,9 +214,9 @@ const Header = () => {
               </div>
             </div>
           </Link>
-          <Button className="ml-5 mt-3 flex gap-x-2 bg-primary" size="sm">
-            <UserCircleIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
-            Profile
+          <Button className="ml-5 mt-3 flex gap-x-2 bg-primary" size="sm" onClick={logOutUser}>
+            <PowerIcon className="h-4 w-4 text-white transition-all duration-200 hover:text-primary" />
+            Logout
           </Button>
         </div>
       </Drawer>

@@ -32,7 +32,7 @@ const Login = () => {
   }
 
   return (
-    <div className="mx-10 my-16 flex flex-col gap-3 font-poppins lg:mx-0 lg:my-0 lg:flex-row">
+    <div className="mx-3 my-2 flex flex-col gap-3 font-poppins lg:mx-0 lg:my-0 lg:flex-row">
       <div className="hidden lg:block lg:w-1/2">
         <img src={SideImage} alt="side-image" />
       </div>
@@ -56,7 +56,7 @@ const Login = () => {
             {errors?.username && <p className="text-red-400">{errors?.username?.message}</p>}
             <Input variant="standard" label="Password" {...register('password')} />
             {errors?.password && <p className="text-red-400">{errors?.password?.message}</p>}
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full items-center justify-between gap-2 lg:gap-0">
               <Button className="bg-primary px-12 lg:px-24" type="submit">
                 {loadingButton.login ? <Spinner className="h-5 w-5" /> : 'Log in'}
               </Button>
