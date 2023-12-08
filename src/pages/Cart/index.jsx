@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { useCart } from '../../context/CartContext';
 import { Button, IconButton, Input, Spinner } from '@material-tailwind/react';
 import { MinusIcon, PlusIcon, ShoppingBagIcon, TagIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
+import { useCart } from '../../context/CartContext';
 import { BreadcrumbsComponent, SectionTitle } from '../../components';
 
 const Cart = () => {
@@ -214,9 +215,11 @@ const Cart = () => {
               </div>
             </div>
             <div>
-              <Button className="flex w-full flex-row items-center justify-center gap-2 bg-primary">
-                Checkout <ShoppingBagIcon className="w-5" />
-              </Button>
+              <Link to="/checkout">
+                <Button className="flex w-full flex-row items-center justify-center gap-2 bg-primary">
+                  Checkout <ShoppingBagIcon className="w-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         )}

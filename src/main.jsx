@@ -8,7 +8,7 @@ import { Layout } from './components';
 import ProtectedRoute from './hoc/ProtectedRoute';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
-import { Home, Cart, Login, Products, ProductCategories, ProductsCategory, ProductDetail } from './pages';
+import { Home, Cart, Login, Checkout, Products, ProductCategories, ProductsCategory, ProductDetail } from './pages';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -22,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route element={<ProtectedRoute />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<Checkout />} />
                   <Route path="/products" element={<Products />} />
                   <Route path="/products/:id" element={<ProductDetail />} />
                   <Route path="/products/categories" element={<ProductCategories />} />

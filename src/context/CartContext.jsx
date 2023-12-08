@@ -59,6 +59,13 @@ const cartReducer = (state, action) => {
         ...state,
         cartItems: removeCartItems,
       };
+    case 'RESET_CART':
+      return {
+        cartItems: [],
+        promoCode: '',
+        promoDiscount: 0,
+        discountPrice: 0,
+      };
     default:
       return state;
   }
