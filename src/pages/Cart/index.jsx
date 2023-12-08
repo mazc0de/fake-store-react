@@ -7,12 +7,11 @@ import { BreadcrumbsComponent, SectionTitle } from '../../components';
 
 const Cart = () => {
   const { state, dispatch, getTotalPriceCart } = useCart();
-
   const { totalPrice, discountPrice, priceAfterDiscount } = getTotalPriceCart();
 
   const [promoCode, setPromoCode] = useState();
-  const [promoCodeStatus, setPromoCodeStatus] = useState();
   const [promoDiscount, setPromoDiscount] = useState();
+  const [promoCodeStatus, setPromoCodeStatus] = useState();
   const [loadingPromoCodeButton, setLoadingPromoCodeButton] = useState(false);
 
   const removeFromCart = (item) => {
@@ -146,6 +145,10 @@ const Cart = () => {
               <div className="flex justify-between">
                 <p>Subtotal</p>
                 <p className="font-semibold">${totalPrice.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between">
+                <p>Shipping</p>
+                <p className="font-semibold">FREE</p>
               </div>
               {state?.promoCode && (
                 <>
