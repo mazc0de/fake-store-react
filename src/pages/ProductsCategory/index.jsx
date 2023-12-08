@@ -55,7 +55,9 @@ const ProductsCategory = () => {
     <>
       <BreadcrumbsComponent menus={breadcrumbsMenu} />
       {loading ? (
-        <LoadingSpinner />
+        <div className="mt-3">
+          <LoadingSpinner />
+        </div>
       ) : (
         <div className="mt-3 grid grid-cols-1 gap-5 lg:grid-cols-4">
           {products?.map((product) => {
